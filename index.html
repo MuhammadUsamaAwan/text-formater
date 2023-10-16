@@ -37,12 +37,12 @@
               inner = inner + span.innerText.replace('&nbsp;', '').replace('’', "'").trim();
             }
           });
-          output = output + `<p>${inner}</p>`.replace(/\s+/g, ' ');
+          if(inner !== '') output = output + `<p>${inner}</p>`.replace(/\s+/g, ' ');
         });
         document.getElementById('output').innerHTML = output;
       }
       document.querySelector('button').addEventListener('click', () => {
-        navigator.clipboard.writeText(document.getElementById('output').innerHTML);
+        navigator.clipboard.writeText(document.getElementById('output'));
       });
     </script>
   </body>
