@@ -42,7 +42,7 @@
         document.getElementById('output').innerHTML = output;
       }
       document.querySelector('button').addEventListener('click', () => {
-        navigator.clipboard.writeText(document.getElementById('output'));
+        navigator.clipboard.writeText(document.getElementById('output').innerHTML);
       });
     </script>
   </body>
