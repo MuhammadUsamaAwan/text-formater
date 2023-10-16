@@ -27,13 +27,17 @@
           const spans = tempParagraph.querySelectorAll('span');
           let inner = '';
           spans.forEach(span => {
-            if (span.style.fontWeight === '700' || span.style.fontStyle === 'italic') {
-              inner = inner + `<strong>${span.innerText.replace('.', '')} </strong>`;
+            if (span.style.fontWeight === '700' || !!span.querySelector('b')) {
+              inner =
+                inner +
+                `<strong>${span.innerText.replace('.', '').replace('&nbsp;', '').replace('’', "'").trim()} </strong>`;
+            } else if (span.style.fontStyle === 'italic' || !!span.querySelector('i')) {
+              inner = inner + ` <em>${span.innerText.replace('&nbsp;', '').replace('’', "'").trim()}</em> `;
             } else {
-              inner = inner + span.innerText;
+              inner = inner + span.innerText.replace('&nbsp;', '').replace('’', "'").trim();
             }
           });
-          output = output + `<p>${inner}</p>`.replace('&nbsp;', '').replace('’', "'").replace(/\s+/g, ' ').trim();
+          output = output + `<p>${inner}</p>`.replace(/\s+/g, ' ');
         });
         document.getElementById('output').innerHTML = output;
       }
