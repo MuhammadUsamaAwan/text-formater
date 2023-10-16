@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Text Formatter</title>
+  </head>
+
+  <body>
+    <div
+      contenteditable="true"
+      style="height: 50vh; border: 1px solid #333; padding: 1rem; overflow-y: auto"
+      oninput="formatText()"
+    ></div>
+    <div id="output"></div>
+    <button style="margin-top: 0.5rem">Copy to Clipboard</button>
+    <script>
+      function formatText() {
+        let output = '';
+        const text = document.querySelector('[contenteditable]').innerHTML;
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = text;
+        const paragraphs = tempDiv.querySelectorAll('p');
+        paragraphs?.forEach(p => {
+          const tempParagraph = document.createElement('p');
+          tempParagraph.innerHTML = p.innerHTML;
+          const spans = tempParagraph.querySelectorAll('span');
+          let inner = '';
+          spans.forEach(span => {
+            if (span.style.fontWeight === '700' || span.style.fontStyle === 'italic') {
+              inner = inner + `<strong>${span.innerText.replace('.', '')} </strong>`;
+            } else {
+              inner = inner + span.innerText;
+            }
+          });
+          output = output + `<p>${inner}</p>`.replace('&nbsp;', '').replace('’', "'").replace(/\s+/g, ' ').trim();
+        });
+        document.getElementById('output').innerHTML = output;
+      }
+      document.querySelector('button').addEventListener('click', () => {
+        navigator.clipboard.writeText(document.getElementById('output').innerHTML);
+      });
+    </script>
+  </body>
+</html>
