@@ -28,13 +28,14 @@
           const spans = tempParagraph.querySelectorAll('span');
           let inner = '';
           spans.forEach(span => {
-            if (span.style.fontWeight === '700' || !!span.querySelector('b')) {
+            if (span.innerText.includes('AtHigherLevels')) {
+              inner = inner +
+                `<strong>At Higher Levels </strong>`;
+            }
+            else if (span.style.fontWeight === '700' || !!span.querySelector('b')) {
               inner =
                 inner +
                 `<strong>${span.innerText.replace('.', '').replace('&nbsp;', '').replace('’', "'").trim()} </strong>`;
-            } else if (span.innerText.includes('AtHigherLevels')) {
-              inner = inner +
-                `<strong>At Higher Levels </strong>`;
             } else if (span.style.fontStyle === 'italic' || !!span.querySelector('i')) {
               inner = inner + ` <em>${span.innerText.replace('&nbsp;', '').replace('’', "'").trim()}</em> `;
             } else {
